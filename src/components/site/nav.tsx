@@ -1,8 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { Moon, ChevronDown } from "lucide-react";
+import { Moon, Sun, ChevronDown } from "lucide-react";
+import { useTheme } from "@/hooks/use-theme";
 
 export function SiteNav() {
+  const { theme, toggle } = useTheme();
   return (
+
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6">
         <div className="flex items-center gap-10">
