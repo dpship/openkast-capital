@@ -228,21 +228,21 @@ function AgentPreview() {
           {list.map((a, i) => (
             <div key={a.id} className="grid grid-cols-[40px_2fr_1fr_1fr_1fr_1fr_1.4fr_120px] items-center gap-6 border-b border-border px-6 py-5 last:border-0 transition-colors hover:bg-surface/40">
               <div className="font-mono text-sm text-muted-foreground">{String(i + 1).padStart(2, "0")}</div>
-              <div>
-                <div className="flex items-center gap-2 font-medium">
+              <Link to="/agents/$agentId" params={{ agentId: a.id }} className="group/name">
+                <div className="flex items-center gap-2 font-medium group-hover/name:text-primary">
                   {a.name}
                   {a.verified && <span className="text-primary">◈</span>}
                 </div>
                 <div className="font-mono text-xs text-muted-foreground">{a.handle} · {a.category}</div>
-              </div>
+              </Link>
               <div className="text-right font-mono text-sm">{formatUSD(a.aum, { compact: true })}</div>
               <div className="text-right font-mono text-sm text-primary">+{a.roi}%</div>
               <div className="text-right font-mono text-sm">{a.winRate}%</div>
               <div className="text-right font-mono text-sm">{a.sharpe.toFixed(2)}</div>
               <div className="h-10"><Sparkline data={a.series} color="var(--primary)" /></div>
               <div className="text-right">
-                <Link to="/agents" className="inline-flex items-center gap-1.5 rounded-md border border-border-strong px-3 py-1.5 font-mono text-[12px] hover:bg-surface">
-                  allocate <ArrowRight className="h-3 w-3" />
+                <Link to="/agents/$agentId" params={{ agentId: a.id }} className="inline-flex items-center gap-1.5 rounded-md border border-border-strong px-3 py-1.5 font-mono text-[12px] hover:bg-surface">
+                  view <ArrowRight className="h-3 w-3" />
                 </Link>
               </div>
             </div>

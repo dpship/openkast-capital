@@ -151,18 +151,18 @@ function AgentCard({ agent, rank }: { agent: Agent; rank: number }) {
   return (
     <div className="group relative overflow-hidden rounded-xl border border-border bg-surface/40 p-5 transition-all hover:border-border-strong hover:bg-surface/70">
       <div className="flex items-start justify-between">
-        <div className="flex items-center gap-3">
+        <Link to="/agents/$agentId" params={{ agentId: agent.id }} className="flex items-center gap-3 group/name">
           <div className="grid h-7 w-7 place-items-center rounded-md border border-border bg-background font-mono text-[11px] text-muted-foreground">
             {rank}
           </div>
           <div>
-            <div className="flex items-center gap-1.5 font-medium">
+            <div className="flex items-center gap-1.5 font-medium group-hover/name:text-primary">
               {agent.name}
               {agent.verified && <span className="text-primary text-sm">◈</span>}
             </div>
             <div className="font-mono text-[11px] text-muted-foreground">{agent.handle}</div>
           </div>
-        </div>
+        </Link>
         <button className="font-mono text-[11px] text-muted-foreground hover:text-primary">☆ follow</button>
       </div>
 
@@ -192,9 +192,13 @@ function AgentCard({ agent, rank }: { agent: Agent; rank: number }) {
         <div className="h-16"><Sparkline data={agent.series} color="var(--primary)" height={64} /></div>
       </div>
 
-      <button className="mt-5 flex w-full items-center justify-center gap-2 rounded-md bg-primary py-2.5 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90">
-        Deploy Capital <ArrowRight className="h-3.5 w-3.5" />
-      </button>
+      <Link
+        to="/agents/$agentId"
+        params={{ agentId: agent.id }}
+        className="mt-5 flex w-full items-center justify-center gap-2 rounded-md bg-primary py-2.5 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
+      >
+        View Agent <ArrowRight className="h-3.5 w-3.5" />
+      </Link>
     </div>
   );
 }
@@ -225,10 +229,10 @@ function AgentTable({ agents }: { agents: Agent[] }) {
       {agents.map((a, i) => (
         <div key={a.id} className="grid grid-cols-[40px_2fr_1fr_1fr_1fr_1fr_1fr_1.4fr_120px] items-center gap-4 border-b border-border px-6 py-4 last:border-0 hover:bg-surface/40">
           <div className="font-mono text-sm text-muted-foreground">{String(i + 1).padStart(2, "0")}</div>
-          <div>
-            <div className="font-medium">{a.name}</div>
+          <Link to="/agents/$agentId" params={{ agentId: a.id }} className="group/name">
+            <div className="font-medium group-hover/name:text-primary">{a.name}</div>
             <div className="font-mono text-xs text-muted-foreground">{a.handle} · {a.category}</div>
-          </div>
+          </Link>
           <div className="text-right font-mono text-sm">{formatUSD(a.aum, { compact: true })}</div>
           <div className="text-right font-mono text-sm text-primary">+{a.roi}%</div>
           <div className="text-right font-mono text-sm">{a.winRate}%</div>
@@ -236,8 +240,8 @@ function AgentTable({ agents }: { agents: Agent[] }) {
           <div className="text-right font-mono text-sm">{a.drawdown}%</div>
           <div className="h-10"><Sparkline data={a.series} color="var(--primary)" /></div>
           <div className="text-right">
-            <Link to="/agents" className="inline-flex items-center gap-1 rounded-md border border-border-strong px-3 py-1.5 font-mono text-[12px] hover:bg-surface">
-              allocate
+            <Link to="/agents/$agentId" params={{ agentId: a.id }} className="inline-flex items-center gap-1 rounded-md border border-border-strong px-3 py-1.5 font-mono text-[12px] hover:bg-surface">
+              view
             </Link>
           </div>
         </div>
