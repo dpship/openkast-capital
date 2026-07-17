@@ -229,10 +229,10 @@ function AgentTable({ agents }: { agents: Agent[] }) {
       {agents.map((a, i) => (
         <div key={a.id} className="grid grid-cols-[40px_2fr_1fr_1fr_1fr_1fr_1fr_1.4fr_120px] items-center gap-4 border-b border-border px-6 py-4 last:border-0 hover:bg-surface/40">
           <div className="font-mono text-sm text-muted-foreground">{String(i + 1).padStart(2, "0")}</div>
-          <div>
-            <div className="font-medium">{a.name}</div>
+          <Link to="/agents/$agentId" params={{ agentId: a.id }} className="group/name">
+            <div className="font-medium group-hover/name:text-primary">{a.name}</div>
             <div className="font-mono text-xs text-muted-foreground">{a.handle} · {a.category}</div>
-          </div>
+          </Link>
           <div className="text-right font-mono text-sm">{formatUSD(a.aum, { compact: true })}</div>
           <div className="text-right font-mono text-sm text-primary">+{a.roi}%</div>
           <div className="text-right font-mono text-sm">{a.winRate}%</div>
@@ -240,8 +240,8 @@ function AgentTable({ agents }: { agents: Agent[] }) {
           <div className="text-right font-mono text-sm">{a.drawdown}%</div>
           <div className="h-10"><Sparkline data={a.series} color="var(--primary)" /></div>
           <div className="text-right">
-            <Link to="/agents" className="inline-flex items-center gap-1 rounded-md border border-border-strong px-3 py-1.5 font-mono text-[12px] hover:bg-surface">
-              allocate
+            <Link to="/agents/$agentId" params={{ agentId: a.id }} className="inline-flex items-center gap-1 rounded-md border border-border-strong px-3 py-1.5 font-mono text-[12px] hover:bg-surface">
+              view
             </Link>
           </div>
         </div>
