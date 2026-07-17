@@ -32,9 +32,10 @@ export function SiteNav() {
             <span className="text-border-strong">·</span>
             <span>live on solana</span>
           </div>
-          <button className="grid h-9 w-9 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground" aria-label="Theme">
-            <Moon className="h-4 w-4" />
+          <button onClick={toggle} className="grid h-9 w-9 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground" aria-label="Toggle theme">
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
+
           <button className="hidden items-center gap-2 rounded-md bg-primary px-3.5 py-1.5 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex">
             FTD7…efNZ
             <ChevronDown className="h-3.5 w-3.5" />
