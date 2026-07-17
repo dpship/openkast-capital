@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Moon, Sun, ChevronDown } from "lucide-react";
+import { Moon, Sun, ChevronDown, Wallet } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
+import { AuthDialog } from "@/components/site/auth-dialog";
 
 export function SiteNav() {
   const { theme, toggle } = useTheme();
-  return (
+  const [authOpen, setAuthOpen] = useState(false);
+  const [connected, setConnected] = useState(false);
 
+  return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6">
         <div className="flex items-center gap-10">
@@ -36,12 +40,33 @@ export function SiteNav() {
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
 
-          <button className="hidden items-center gap-2 rounded-md bg-primary px-3.5 py-1.5 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex">
-            FTD7…efNZ
-            <ChevronDown className="h-3.5 w-3.5" />
-          </button>
+          {connected ? (
+            <button
+              onClick={() => setAuthOpen(true)}
+              className="hidden items-center gap-2 rounded-md bg-primary px-3.5 py-1.5 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
+            >
+              FTD7…efNZ
+              <ChevronDown className="h-3.5 w-3.5" />
+            </button>
+          ) : (
+            <button
+              onClick={() => setAuthOpen(true)}
+              className="hidden items-center gap-2 rounded-md bg-primary px-3.5 py-1.5 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
+            >
+              <Wallet className="h-3.5 w-3.5" />
+              connect
+            </button>
+          )}
         </div>
       </div>
+      <AuthDialog
+        open={authOpen}
+        onOpenChange={(v) => {
+          setAuthOpen(v);
+          if (!v) setConnected((c) => !c);
+        }}
+        mode={connected ? "signout" : "signin"}
+      />
     </header>
   );
 }
