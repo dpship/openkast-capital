@@ -23,7 +23,7 @@ export function SiteNav() {
             <NavLink to="/agents">agents</NavLink>
             <NavLink to="/markets">markets</NavLink>
             <NavLink to="/portfolio">portfolio</NavLink>
-            <a href="#docs" className="font-mono text-[13px] text-muted-foreground transition-colors hover:text-foreground">docs</a>
+            <NavLink to="/docs">docs</NavLink>
           </nav>
         </div>
         <div className="flex items-center gap-3">
