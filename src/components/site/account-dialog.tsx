@@ -8,7 +8,6 @@ import {
   EyeOff,
   KeyRound,
   Loader2,
-  LogOut,
   ShieldAlert,
   Wallet,
 } from "lucide-react";
