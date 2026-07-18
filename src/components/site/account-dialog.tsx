@@ -208,16 +208,7 @@ export function AccountDialog({
 
             {/* Footer */}
             <div className="flex items-center justify-between border-t border-border bg-muted/30 px-6 py-3">
-              <button
-                onClick={() => {
-                  onOpenChange(false);
-                  onSignOut?.();
-                }}
-                className="flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground hover:text-foreground"
-              >
-                <LogOut className="h-3.5 w-3.5" />
-                sign out
-              </button>
+              <span className="font-mono text-[10px] text-muted-foreground">private · encrypted at rest</span>
               <span className="font-mono text-[10px] text-muted-foreground">v1.0 · mainnet-beta</span>
             </div>
           </div>
