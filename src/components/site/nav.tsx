@@ -3,10 +3,12 @@ import { Link } from "@tanstack/react-router";
 import { Moon, Sun, ChevronDown, Wallet } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { AuthDialog } from "@/components/site/auth-dialog";
+import { AccountDialog } from "@/components/site/account-dialog";
 
 export function SiteNav() {
   const { theme, toggle } = useTheme();
   const [authOpen, setAuthOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const [connected, setConnected] = useState(false);
 
   return (
