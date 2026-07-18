@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Moon, Sun, ChevronDown, Wallet } from "lucide-react";
+import { Moon, Sun, ChevronDown, Wallet, UserRound } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { AuthDialog } from "@/components/site/auth-dialog";
 import { AccountDialog } from "@/components/site/account-dialog";
@@ -8,6 +8,7 @@ import { AccountDialog } from "@/components/site/account-dialog";
 export function SiteNav() {
   const { theme, toggle } = useTheme();
   const [authOpen, setAuthOpen] = useState(false);
+  const [signoutOpen, setSignoutOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [connected, setConnected] = useState(false);
 
@@ -43,13 +44,22 @@ export function SiteNav() {
           </button>
 
           {connected ? (
-            <button
-              onClick={() => setAccountOpen(true)}
-              className="hidden items-center gap-2 rounded-md bg-primary px-3.5 py-1.5 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
-            >
-              FTD7…efNZ
-              <ChevronDown className="h-3.5 w-3.5" />
-            </button>
+            <>
+              <button
+                onClick={() => setAccountOpen(true)}
+                aria-label="Account"
+                className="hidden h-9 w-9 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground md:grid"
+              >
+                <UserRound className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => setSignoutOpen(true)}
+                className="hidden items-center gap-2 rounded-md bg-primary px-3.5 py-1.5 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
+              >
+                FTD7…efNZ
+                <ChevronDown className="h-3.5 w-3.5" />
+              </button>
+            </>
           ) : (
             <button
               onClick={() => setAuthOpen(true)}
@@ -69,11 +79,15 @@ export function SiteNav() {
         }}
         mode="signin"
       />
-      <AccountDialog
-        open={accountOpen}
-        onOpenChange={setAccountOpen}
-        onSignOut={() => setConnected(false)}
+      <AuthDialog
+        open={signoutOpen}
+        onOpenChange={(v) => {
+          setSignoutOpen(v);
+          if (!v) setConnected(false);
+        }}
+        mode="signout"
       />
+      <AccountDialog open={accountOpen} onOpenChange={setAccountOpen} />
     </header>
   );
 }
