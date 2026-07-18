@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Moon, Sun, ChevronDown, Wallet } from "lucide-react";
+import { Moon, Sun, ChevronDown, Wallet, UserRound } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { AuthDialog } from "@/components/site/auth-dialog";
 import { AccountDialog } from "@/components/site/account-dialog";
@@ -8,6 +8,7 @@ import { AccountDialog } from "@/components/site/account-dialog";
 export function SiteNav() {
   const { theme, toggle } = useTheme();
   const [authOpen, setAuthOpen] = useState(false);
+  const [signoutOpen, setSignoutOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [connected, setConnected] = useState(false);
 
