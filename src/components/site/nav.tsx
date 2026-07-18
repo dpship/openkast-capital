@@ -44,7 +44,7 @@ export function SiteNav() {
 
           {connected ? (
             <button
-              onClick={() => setAuthOpen(true)}
+              onClick={() => setAccountOpen(true)}
               className="hidden items-center gap-2 rounded-md bg-primary px-3.5 py-1.5 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
             >
               FTD7…efNZ
@@ -65,9 +65,14 @@ export function SiteNav() {
         open={authOpen}
         onOpenChange={(v) => {
           setAuthOpen(v);
-          if (!v) setConnected((c) => !c);
+          if (!v) setConnected(true);
         }}
-        mode={connected ? "signout" : "signin"}
+        mode="signin"
+      />
+      <AccountDialog
+        open={accountOpen}
+        onOpenChange={setAccountOpen}
+        onSignOut={() => setConnected(false)}
       />
     </header>
   );
