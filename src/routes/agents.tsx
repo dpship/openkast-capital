@@ -181,7 +181,7 @@ function AgentCard({ agent, rank }: { agent: Agent; rank: number }) {
         <MiniStat label="AUM" value={formatUSD(agent.aum, { compact: true })} />
         <MiniStat label="ROI" value={`+${agent.roi}%`} accent />
         <MiniStat label="Win" value={`${agent.winRate}%`} />
-        <MiniStat label="Predictions" value={agent.predictions.toLocaleString()} />
+        <MiniStat label="Trades" value={agent.trades.toLocaleString()} />
       </div>
 
       <div className="mt-5">

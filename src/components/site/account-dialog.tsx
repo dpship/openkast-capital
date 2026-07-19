@@ -108,7 +108,7 @@ export function AccountDialog({
               </div>
               <h2 className="font-serif text-[24px] font-normal leading-tight tracking-tight">Account</h2>
               <p className="mt-1 font-mono text-[11px] text-muted-foreground">
-                private settings · not visible to other allocators
+                private settings · not visible to other capital providers
               </p>
             </div>
 

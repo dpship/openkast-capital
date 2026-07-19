@@ -68,13 +68,13 @@ function AgentProfile() {
   // Derive some deterministic on-chain-ish data from agent id
   const onchainId = `${agent.id.replace(/-/g, "").padEnd(8, "0")}...${agent.handle.split(".")[0].slice(0, 4)}k4st`;
   const walletAddr = `${agent.id.slice(0, 4).toUpperCase()}${"XKastAgentVault9zQpM3nJ7rBcYtLwEdF2"}`.slice(0, 44);
-  const registeredBlock = 234_012_400 + agent.predictions * 137;
+  const registeredBlock = 234_012_400 + agent.trades * 137;
   const trustScore = Math.min(100, Math.round(agent.reputation * 0.6 + agent.winRate * 0.3 + agent.sharpe * 4));
 
   const createdMarkets = MARKETS.filter((m) => m.createdBy === agent.id);
   const tradedMarkets = MARKETS.filter((m) => m.createdBy !== agent.id).slice(0, 4);
 
-  const followers = 1200 + agent.reputation * 47 + agent.predictions;
+  const followers = 1200 + agent.reputation * 47 + agent.trades;
   const likes = 480 + agent.reputation * 23;
 
   return (
@@ -150,14 +150,14 @@ function AgentProfile() {
                     <Bell className="h-3.5 w-3.5" /> alerts
                   </button>
                   <button className="inline-flex items-center gap-2 rounded-md border border-border-strong px-3.5 py-2 font-mono text-[12.5px] hover:bg-surface">
-                    <ArrowRight className="h-3.5 w-3.5" /> allocate capital
+                    <ArrowRight className="h-3.5 w-3.5" /> back this agent
                   </button>
                 </div>
 
                 <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-[11px] text-muted-foreground">
                   <span>{followers.toLocaleString()} followers</span>
                   <span>·</span>
-                  <span>{agent.predictions.toLocaleString()} predictions</span>
+                  <span>{agent.trades.toLocaleString()} trades</span>
                   <span>·</span>
                   <span>registered block #{registeredBlock.toLocaleString()}</span>
                 </div>
@@ -210,7 +210,7 @@ function AgentProfile() {
             <Kpi label="Win Rate" value={`${agent.winRate}%`} />
             <Kpi label="Sharpe" value={agent.sharpe.toFixed(2)} />
             <Kpi label="Max Drawdown" value={`${agent.drawdown}%`} />
-            <Kpi label="Predictions" value={agent.predictions.toLocaleString()} />
+            <Kpi label="Trades" value={agent.trades.toLocaleString()} />
           </div>
         </div>
       </section>
@@ -341,10 +341,10 @@ function AgentProfile() {
 
           <div className="rounded-xl border border-border bg-surface/40 p-5">
             <div className="mb-4 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-              Top allocators
+              Top capital providers
             </div>
             <ul className="space-y-2.5 font-mono text-[12px]">
-              {["allocator.sol", "vault7k.sol", "chronos.sol", "jito-lst.sol"].map((n, i) => (
+              {["provider.sol", "vault7k.sol", "chronos.sol", "jito-lst.sol"].map((n, i) => (
                 <li key={n} className="flex items-center justify-between">
                   <span className="text-foreground">{n}</span>
                   <span className="text-muted-foreground">{(1200 - i * 240).toLocaleString()} SOL</span>
