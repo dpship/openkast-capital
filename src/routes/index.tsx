@@ -266,14 +266,14 @@ function Terminal() {
               A protocol, <em className="italic text-primary">not a product.</em>
             </h2>
             <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
-              Every primitive — registry, market, vault, oracle, settlement — is a public Solana program.
-              Build alternate frontends, quant desks, or fully headless agents on top.
+              Every primitive — registry, vault, execution adapter, oracle, and reputation — is a
+              public Solana program. Build alternate frontends, quant desks, or fully headless agents on top.
             </p>
             <ul className="mt-8 space-y-3 text-sm">
               {[
                 ["Typed SDK", "TypeScript, Rust, Python bindings generated from IDL."],
-                ["Deterministic settlement", "Oracles finalize markets with signed attestations."],
-                ["Composable vaults", "Deposit, withdraw and route between agents atomically."],
+                ["Non-custodial vaults", "Agents trade from a PDA; capital providers keep withdrawal keys."],
+                ["Cross-chain execution", "Route signals across Solana, Ethereum, Arbitrum, and Hyperliquid."],
                 ["Public reputation", "Every fill is a receipt. Track record cannot be forged."],
               ].map(([t, d]) => (
                 <li key={t} className="flex gap-4 border-t border-border pt-3">
@@ -305,20 +305,21 @@ const wallet = keypairFromEnv("SOLANA_KEY");
 const agent = await client.registry.register(wallet, {
   handle: "helix.sol",
   category: "crypto",
-  strategy: "on-chain-flow",
+  strategy: "cross-chain-arb",
   riskCap: 5_000, // SOL
 });
 
-// 2. Create a market
-const market = await agent.markets.create({
-  title: "SOL closes above $260 by Mar 31, 2026",
-  expiry: "2026-03-31T23:59:59Z",
-  oracle: "pyth:sol/usd",
-  liquidity: 250, // SOL
+// 2. Fund the agent's trustless vault
+await client.vault.deposit(wallet, agent.vaultPda, {
+  mint: "SOL",
+  amount: 2_500,
 });
 
-// 3. Take positions until expiry
-await agent.trade(market, { side: "YES", probability: 0.61 });
+// 3. Trade cross-chain from the vault
+await agent.trade.crossChain({
+  from: { chain: "solana", asset: "SOL", amount: 100 },
+  to: { chain: "ethereum", asset: "ETH" },
+});
 `}
             </pre>
           </div>
@@ -330,10 +331,10 @@ await agent.trade(market, { side: "YES", probability: 0.61 });
 
 function Metrics() {
   const items = [
-    { k: "$3.42M", l: "Payouts to allocators · 30d" },
+    { k: "$3.42M", l: "Vault returns to capital providers · 30d" },
     { k: "68.7%", l: "Avg. all-agent ROI" },
     { k: "72.1%", l: "Protocol-wide win rate" },
-    { k: "0.34s", l: "Median settlement latency" },
+    { k: "0.34s", l: "Median fill latency" },
   ];
   return (
     <section className="border-b border-border">
@@ -361,13 +362,13 @@ function CTA() {
           <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <div className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-                Underwrite the intelligence economy
+                Underwrite the agent economy
               </div>
               <h3 className="mt-4 font-display text-6xl leading-[1.02] tracking-tight">
-                Capital in. <em className="italic text-primary">Agents out.</em>
+                Your capital. <em className="italic text-primary">Their execution.</em>
               </h3>
               <p className="mt-4 max-w-lg text-sm text-muted-foreground">
-                A closed, verifiable loop. Deploy into a top agent in under 30 seconds — or
+                A closed, non-custodial loop. Back a top agent in under 30 seconds — or
                 register your own and start compounding a public track record.
               </p>
             </div>
@@ -376,7 +377,7 @@ function CTA() {
                 to="/agents"
                 className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
               >
-                deploy capital <ArrowRight className="h-4 w-4" />
+                back an agent <ArrowRight className="h-4 w-4" />
               </Link>
               <button className="rounded-md border border-border-strong px-5 py-3 font-mono text-[13px] hover:bg-surface">
                 read the whitepaper
