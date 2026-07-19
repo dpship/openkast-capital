@@ -30,7 +30,7 @@ export const Route = createFileRoute("/agents/$agentId")({
       {
         name: "description",
         content: loaderData
-          ? `${loaderData.agent.name} · ${loaderData.agent.category} · ROI +${loaderData.agent.roi}% · Reputation ${loaderData.agent.reputation}. On-chain performance, markets, positions and trust score.`
+          ? `${loaderData.agent.name} · ${loaderData.agent.category} AI trading agent · ROI +${loaderData.agent.roi}% · Reputation ${loaderData.agent.reputation}. Trustless vault, cross-chain execution, and public track record.`
           : "Agent profile on OpenKast.",
       },
     ],
@@ -116,8 +116,8 @@ function AgentProfile() {
                   <span>agent id {onchainId}</span>
                 </div>
                 <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
-                  {agent.tagline} Runs continuously against the OpenKast oracle set. Positions,
-                  rebalances and settlements are attested on Solana.
+                  {agent.tagline} Runs inside a trustless vault across Solana and connected chains.
+                  User funds are never custodied; every rebalance and settlement is attested on-chain.
                 </p>
 
                 {/* Actions */}
@@ -171,7 +171,7 @@ function AgentProfile() {
               <div className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
                 Trust Score
               </div>
-              <div className="font-mono text-[11px] text-primary">on-chain verified</div>
+              <div className="font-mono text-[11px] text-primary">reputation verified</div>
             </div>
             <div className="mt-4 flex items-end justify-between">
               <div>
@@ -269,11 +269,11 @@ function AgentProfile() {
                   Strategy profile
                 </div>
                 <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-3">
-                  <InfoCell k="Model architecture" v="Ensemble · MoE + regime classifier" />
-                  <InfoCell k="Signals" v="On-chain flow · macro · sentiment" />
+                  <InfoCell k="Strategy model" v="Ensemble · MoE + regime classifier" />
+                  <InfoCell k="Supported chains" v="Solana · Ethereum · Arbitrum · Hyperliquid" />
                   <InfoCell k="Risk cap" v="5,000 SOL" />
                   <InfoCell k="Rebalance cadence" v="event-driven · ~14/day" />
-                  <InfoCell k="Oracle set" v="Pyth · Switchboard · Chainlink" />
+                  <InfoCell k="Custody model" v="Non-custodial vault PDA" />
                   <InfoCell k="Settlement latency" v="0.34s median" />
                 </div>
               </div>
@@ -303,11 +303,11 @@ function AgentProfile() {
           {tab === "activity" && (
             <div className="mt-8 rounded-xl border border-border">
               {[
-                { t: "settlement", d: "resolved US-CPI-JAN-26 → YES · +42.1 SOL PnL", ago: "42m" },
-                { t: "position", d: "opened SOL-200-Q1 · YES @ 0.61 · 18.4 SOL", ago: "1h" },
+                { t: "settlement", d: "cross-chain arb settled · SOL → ETH · +42.1 SOL PnL", ago: "42m" },
+                { t: "position", d: "opened BTC perp signal · 18.4 SOL notional", ago: "1h" },
                 { t: "market", d: "created EU-RATE-MAR · liquidity 42 SOL", ago: "3h" },
-                { t: "rebalance", d: "reduced macro exposure by 12%", ago: "6h" },
-                { t: "deposit", d: "vault topped up · +120 SOL", ago: "11h" },
+                { t: "rebalance", d: "reduced macro exposure by 12% across chains", ago: "6h" },
+                { t: "deposit", d: "vault topped up · +120 SOL · non-custodial", ago: "11h" },
                 { t: "reputation", d: "reputation score +2 (streak: 7)", ago: "1d" },
               ].map((e, i) => (
                 <div key={i} className="grid grid-cols-[100px_1fr_60px] items-center gap-4 border-b border-border px-5 py-4 last:border-0">
@@ -335,7 +335,7 @@ function AgentProfile() {
               href="#"
               className="mt-4 inline-flex items-center gap-1.5 font-mono text-[11.5px] text-primary hover:underline"
             >
-              view on solscan <ExternalLink className="h-3 w-3" />
+              view registry on solscan <ExternalLink className="h-3 w-3" />
             </a>
           </div>
 
