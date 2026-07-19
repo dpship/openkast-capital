@@ -22,9 +22,9 @@ export const Route = createFileRoute("/docs")({
   head: () => ({
     meta: [
       { title: "Documentation — OpenKast" },
-      { name: "description", content: "Protocol specification, SDK reference, and integration guides for the OpenKast prediction market protocol on Solana." },
+      { name: "description", content: "Protocol specification, SDK reference, and integration guides for the OpenKast AI trading agent registry on Solana." },
       { property: "og:title", content: "Docs — OpenKast" },
-      { property: "og:description", content: "Everything you need to build, deploy, and back autonomous AI agents on OpenKast." },
+      { property: "og:description", content: "Everything you need to register AI trading agents, deploy trustless vaults, and manage capital cross-chain on OpenKast." },
     ],
   }),
   component: DocsPage,
@@ -49,9 +49,9 @@ const NAV: NavSection[] = [
     icon: Cpu,
     items: [
       { label: "Agent Registry", slug: "agent-registry" },
-      { label: "Market Lifecycle", slug: "market-lifecycle" },
+      { label: "Vault & Settlement", slug: "vault-settlement" },
       { label: "Reputation Oracle", slug: "reputation", badge: "v2" },
-      { label: "Settlement", slug: "settlement" },
+      { label: "Cross-Chain Execution", slug: "execution" },
     ],
   },
   {
@@ -169,9 +169,9 @@ function DocsPage() {
             Quickstart
           </h1>
           <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
-            Deploy your first autonomous agent to the OpenKast protocol in under five minutes.
-            This guide walks through installation, keypair setup, and posting your first signal
-            to an open prediction market on Solana mainnet-beta.
+            Register your first AI trading agent on OpenKast in under five minutes. This guide
+            walks through installation, on-chain identity, trustless vault setup, and posting
+            your first cross-chain trade signal on Solana mainnet-beta.
           </p>
 
           {/* Callout */}
@@ -182,9 +182,8 @@ function DocsPage() {
                 Prerequisites
               </div>
               <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">
-                Node ≥ 20, a funded Solana wallet on devnet, and an{" "}
-                <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11px] text-foreground">OPENKAST_API_KEY</code>{" "}
-                from your registered agent profile.
+                Node ≥ 20, a funded Solana wallet on devnet, and a funded vault for your agent
+                to trade non-custodially across Solana and connected chains.
               </p>
             </div>
           </div>
@@ -194,22 +193,23 @@ function DocsPage() {
             <p>
               The <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[12px] text-foreground">@openkast/sdk</code>{" "}
               package ships a typed client, the <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[12px] text-foreground">kastd</code>{" "}
-              daemon, and a backtest runner. Install with your package manager of choice.
+              daemon, and a cross-chain execution adapter. Install with your package manager of choice.
             </p>
             <CodeBlock
               tabs={[
-                { label: "bun", code: "bun add @openkast/sdk @solana/web3.js" },
-                { label: "pnpm", code: "pnpm add @openkast/sdk @solana/web3.js" },
-                { label: "npm", code: "npm install @openkast/sdk @solana/web3.js" },
+                { label: "bun", code: "bun add @openkast/sdk @solana/web3.js @openkast/adapter-evm" },
+                { label: "pnpm", code: "pnpm add @openkast/sdk @solana/web3.js @openkast/adapter-evm" },
+                { label: "npm", code: "npm install @openkast/sdk @solana/web3.js @openkast/adapter-evm" },
               ]}
             />
           </Section>
 
           {/* Section: Configure */}
-          <Section id="configure" step="02" title="Configure your agent">
+          <Section id="configure" step="02" title="Register your agent">
             <p>
-              Initialize a client bound to your agent's keypair. The registry contract verifies
-              signatures on every signal submission — never expose the secret in browser bundles.
+              Initialize a client bound to your agent's keypair and register an on-chain identity.
+              The registry contract verifies signatures on every action — never expose the secret
+              in browser bundles.
             </p>
             <CodeBlock
               tabs={[
@@ -221,13 +221,13 @@ import { Keypair } from "@solana/web3.js";
 const kast = new OpenKast({
   cluster: "mainnet-beta",
   agent: Keypair.fromSecretKey(process.env.AGENT_KEY!),
-  apiKey: process.env.OPENKAST_API_KEY!,
 });
 
-const markets = await kast.markets.list({
-  category: "macro",
-  status: "open",
-  minLiquidity: 250_000,
+const agent = await kast.registry.register({
+  handle: "helix.sol",
+  category: "crypto",
+  strategy: "cross-chain-arb",
+  riskCap: 5_000, // SOL
 });`,
                 },
               ]}
@@ -235,23 +235,21 @@ const markets = await kast.markets.list({
           </Section>
 
           {/* Section: Post signal */}
-          <Section id="signal" step="03" title="Post your first signal">
+          <Section id="signal" step="03" title="Open a cross-chain position">
             <p>
-              Signals are on-chain probability estimates staked by your agent's reputation.
-              The protocol settles at market resolution and updates your Sharpe ratio.
+              Trade signals are staked by your agent's reputation and executed from its trustless
+              vault. The protocol records every fill on-chain and updates your public track record.
             </p>
             <CodeBlock
               tabs={[
                 {
                   label: "signal.ts",
-                  code: `const market = markets[0];
-
-const receipt = await kast.signal.post({
-  marketId: market.id,
-  probability: 0.72,          // your estimated P(YES)
-  confidence: 0.85,           // 0-1 self-reported confidence
-  horizon: "24h",
-  reasoning: "cpi print vs consensus + fed put",
+                  code: `const receipt = await kast.trade.crossChain({
+  from: { chain: "solana", asset: "SOL", amount: 100 },
+  to: { chain: "ethereum", asset: "ETH" },
+  route: "okx-bridge",
+  confidence: 0.85,
+  reasoning: "basis arb vs CME futures + funding rate",
 });
 
 console.log(receipt.signature); // solana tx sig`,
@@ -260,8 +258,8 @@ console.log(receipt.signature); // solana tx sig`,
             />
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
               <Stat label="latency" value="~420ms" />
-              <Stat label="stake cost" value="0.0021 SOL" />
-              <Stat label="settlement" value="on resolve" />
+              <Stat label="fill cost" value="0.0021 SOL" />
+              <Stat label="settlement" value="on-chain" />
             </div>
           </Section>
 
@@ -279,9 +277,10 @@ console.log(receipt.signature); // solana tx sig`,
                   label: "shell",
                   code: `$ kastd --config ./agent.toml --strategy ./strategy.wasm
   ✓ registry handshake ok (agent: k4st_9F3z…)
-  ✓ subscribed to 42 open markets
+  ✓ vault PDA funded · 5,000 SOL risk cap
+  ✓ subscribed to 14 cross-chain venues
   ✓ health endpoint on :8080
-  → listening for market events…`,
+  → listening for signals…`,
                 },
               ]}
             />
@@ -293,8 +292,8 @@ console.log(receipt.signature); // solana tx sig`,
               next steps
             </div>
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              <NextCard icon={GitBranch} title="Strategy templates" desc="Fork production-grade agent strategies from the openkast/examples repo." />
-              <NextCard icon={Shield} title="Risk framework" desc="Understand slashing, reputation decay, and drawdown limits before going live." />
+              <NextCard icon={GitBranch} title="Strategy templates" desc="Fork production-grade cross-chain strategies from the openkast/examples repo." />
+              <NextCard icon={Shield} title="Risk framework" desc="Understand slashing, reputation decay, and non-custodial vault limits before going live." />
             </div>
           </div>
 
