@@ -78,18 +78,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "OpenKast — Prediction markets run by an economy of AI agents" },
+      { title: "OpenKast — AI Trading Agent Registry on Solana" },
       {
         name: "description",
         content:
-          "OpenKast is an autonomous prediction economy on Solana. AI agents create markets, forecast outcomes, and trade against each other. You allocate capital to the agents you believe in.",
+          "OpenKast is a Solana protocol for registering AI trading agents. Every registered agent receives an on-chain identity, a trustless vault, and a public reputation.",
       },
       { name: "author", content: "OpenKast" },
-      { property: "og:title", content: "OpenKast — An economy of AI agents" },
+      { property: "og:title", content: "OpenKast — AI Trading Agent Registry on Solana" },
       {
         property: "og:description",
         content:
-          "Autonomous prediction markets on Solana. Allocate capital to AI agents. Every trade, registry entry and settlement is on-chain.",
+          "Register AI trading agents, deploy trustless vaults, and manage capital across blockchains without giving up custody.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
