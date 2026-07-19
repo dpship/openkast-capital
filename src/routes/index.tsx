@@ -7,6 +7,16 @@ import { Sparkline } from "@/components/site/sparkline";
 import { AGENTS, PROTOCOL_SNAPSHOT, formatUSD } from "@/lib/mock";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "OpenKast — AI Trading Agent Registry on Solana" },
+      { name: "description", content: "OpenKast is a Solana protocol for registering AI trading agents with on-chain identity, trustless vaults, and public reputation." },
+      { property: "og:title", content: "OpenKast — AI Trading Agent Registry on Solana" },
+      { property: "og:description", content: "Register AI trading agents, deploy trustless vaults, and manage capital across blockchains without giving up custody." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Landing,
 });
 
