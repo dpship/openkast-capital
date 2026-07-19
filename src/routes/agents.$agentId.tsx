@@ -30,7 +30,7 @@ export const Route = createFileRoute("/agents/$agentId")({
       {
         name: "description",
         content: loaderData
-          ? `${loaderData.agent.name} · ${loaderData.agent.category} · ROI +${loaderData.agent.roi}% · Reputation ${loaderData.agent.reputation}. On-chain performance, markets, positions and trust score.`
+          ? `${loaderData.agent.name} · ${loaderData.agent.category} AI trading agent · ROI +${loaderData.agent.roi}% · Reputation ${loaderData.agent.reputation}. Trustless vault, cross-chain execution, and public track record.`
           : "Agent profile on OpenKast.",
       },
     ],
@@ -68,13 +68,13 @@ function AgentProfile() {
   // Derive some deterministic on-chain-ish data from agent id
   const onchainId = `${agent.id.replace(/-/g, "").padEnd(8, "0")}...${agent.handle.split(".")[0].slice(0, 4)}k4st`;
   const walletAddr = `${agent.id.slice(0, 4).toUpperCase()}${"XKastAgentVault9zQpM3nJ7rBcYtLwEdF2"}`.slice(0, 44);
-  const registeredBlock = 234_012_400 + agent.predictions * 137;
+  const registeredBlock = 234_012_400 + agent.trades * 137;
   const trustScore = Math.min(100, Math.round(agent.reputation * 0.6 + agent.winRate * 0.3 + agent.sharpe * 4));
 
   const createdMarkets = MARKETS.filter((m) => m.createdBy === agent.id);
   const tradedMarkets = MARKETS.filter((m) => m.createdBy !== agent.id).slice(0, 4);
 
-  const followers = 1200 + agent.reputation * 47 + agent.predictions;
+  const followers = 1200 + agent.reputation * 47 + agent.trades;
   const likes = 480 + agent.reputation * 23;
 
   return (
@@ -116,8 +116,8 @@ function AgentProfile() {
                   <span>agent id {onchainId}</span>
                 </div>
                 <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
-                  {agent.tagline} Runs continuously against the OpenKast oracle set. Positions,
-                  rebalances and settlements are attested on Solana.
+                  {agent.tagline} Runs inside a trustless vault across Solana and connected chains.
+                  User funds are never custodied; every rebalance and settlement is attested on-chain.
                 </p>
 
                 {/* Actions */}
@@ -150,14 +150,14 @@ function AgentProfile() {
                     <Bell className="h-3.5 w-3.5" /> alerts
                   </button>
                   <button className="inline-flex items-center gap-2 rounded-md border border-border-strong px-3.5 py-2 font-mono text-[12.5px] hover:bg-surface">
-                    <ArrowRight className="h-3.5 w-3.5" /> allocate capital
+                    <ArrowRight className="h-3.5 w-3.5" /> back this agent
                   </button>
                 </div>
 
                 <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-[11px] text-muted-foreground">
                   <span>{followers.toLocaleString()} followers</span>
                   <span>·</span>
-                  <span>{agent.predictions.toLocaleString()} predictions</span>
+                  <span>{agent.trades.toLocaleString()} trades</span>
                   <span>·</span>
                   <span>registered block #{registeredBlock.toLocaleString()}</span>
                 </div>
@@ -171,7 +171,7 @@ function AgentProfile() {
               <div className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
                 Trust Score
               </div>
-              <div className="font-mono text-[11px] text-primary">on-chain verified</div>
+              <div className="font-mono text-[11px] text-primary">reputation verified</div>
             </div>
             <div className="mt-4 flex items-end justify-between">
               <div>
@@ -210,7 +210,7 @@ function AgentProfile() {
             <Kpi label="Win Rate" value={`${agent.winRate}%`} />
             <Kpi label="Sharpe" value={agent.sharpe.toFixed(2)} />
             <Kpi label="Max Drawdown" value={`${agent.drawdown}%`} />
-            <Kpi label="Predictions" value={agent.predictions.toLocaleString()} />
+            <Kpi label="Trades" value={agent.trades.toLocaleString()} />
           </div>
         </div>
       </section>
@@ -269,11 +269,11 @@ function AgentProfile() {
                   Strategy profile
                 </div>
                 <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-3">
-                  <InfoCell k="Model architecture" v="Ensemble · MoE + regime classifier" />
-                  <InfoCell k="Signals" v="On-chain flow · macro · sentiment" />
+                  <InfoCell k="Strategy model" v="Ensemble · MoE + regime classifier" />
+                  <InfoCell k="Supported chains" v="Solana · Ethereum · Arbitrum · Hyperliquid" />
                   <InfoCell k="Risk cap" v="5,000 SOL" />
                   <InfoCell k="Rebalance cadence" v="event-driven · ~14/day" />
-                  <InfoCell k="Oracle set" v="Pyth · Switchboard · Chainlink" />
+                  <InfoCell k="Custody model" v="Non-custodial vault PDA" />
                   <InfoCell k="Settlement latency" v="0.34s median" />
                 </div>
               </div>
@@ -303,11 +303,11 @@ function AgentProfile() {
           {tab === "activity" && (
             <div className="mt-8 rounded-xl border border-border">
               {[
-                { t: "settlement", d: "resolved US-CPI-JAN-26 → YES · +42.1 SOL PnL", ago: "42m" },
-                { t: "position", d: "opened SOL-200-Q1 · YES @ 0.61 · 18.4 SOL", ago: "1h" },
+                { t: "settlement", d: "cross-chain arb settled · SOL → ETH · +42.1 SOL PnL", ago: "42m" },
+                { t: "position", d: "opened BTC perp signal · 18.4 SOL notional", ago: "1h" },
                 { t: "market", d: "created EU-RATE-MAR · liquidity 42 SOL", ago: "3h" },
-                { t: "rebalance", d: "reduced macro exposure by 12%", ago: "6h" },
-                { t: "deposit", d: "vault topped up · +120 SOL", ago: "11h" },
+                { t: "rebalance", d: "reduced macro exposure by 12% across chains", ago: "6h" },
+                { t: "deposit", d: "vault topped up · +120 SOL · non-custodial", ago: "11h" },
                 { t: "reputation", d: "reputation score +2 (streak: 7)", ago: "1d" },
               ].map((e, i) => (
                 <div key={i} className="grid grid-cols-[100px_1fr_60px] items-center gap-4 border-b border-border px-5 py-4 last:border-0">
@@ -335,16 +335,16 @@ function AgentProfile() {
               href="#"
               className="mt-4 inline-flex items-center gap-1.5 font-mono text-[11.5px] text-primary hover:underline"
             >
-              view on solscan <ExternalLink className="h-3 w-3" />
+              view registry on solscan <ExternalLink className="h-3 w-3" />
             </a>
           </div>
 
           <div className="rounded-xl border border-border bg-surface/40 p-5">
             <div className="mb-4 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-              Top allocators
+              Top capital providers
             </div>
             <ul className="space-y-2.5 font-mono text-[12px]">
-              {["allocator.sol", "vault7k.sol", "chronos.sol", "jito-lst.sol"].map((n, i) => (
+              {["provider.sol", "vault7k.sol", "chronos.sol", "jito-lst.sol"].map((n, i) => (
                 <li key={n} className="flex items-center justify-between">
                   <span className="text-foreground">{n}</span>
                   <span className="text-muted-foreground">{(1200 - i * 240).toLocaleString()} SOL</span>

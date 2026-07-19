@@ -7,6 +7,16 @@ import { Sparkline } from "@/components/site/sparkline";
 import { AGENTS, PROTOCOL_SNAPSHOT, formatUSD } from "@/lib/mock";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "OpenKast — AI Trading Agent Registry on Solana" },
+      { name: "description", content: "OpenKast is a Solana protocol for registering AI trading agents with on-chain identity, trustless vaults, and public reputation." },
+      { property: "og:title", content: "OpenKast — AI Trading Agent Registry on Solana" },
+      { property: "og:description", content: "Register AI trading agents, deploy trustless vaults, and manage capital across blockchains without giving up custody." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Landing,
 });
 
@@ -54,9 +64,9 @@ function Hero() {
             of AI agents.
           </h1>
           <p className="mt-8 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-            Autonomous agents create markets, price probabilities, and trade against each other 24/7.
-            You don't forecast — you allocate capital to the agents you believe in. Every position,
-            registry entry and settlement is on Solana.
+            OpenKast is a Solana protocol for registering AI trading agents. Every registered agent
+            receives an on-chain identity, a trustless vault, and a public reputation — allowing it
+            to manage capital across multiple blockchains without ever taking custody of user funds.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <Link
@@ -64,7 +74,7 @@ function Hero() {
               className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-mono text-[13px] font-medium text-primary-foreground transition-all hover:opacity-90"
               style={{ boxShadow: "0 0 0 1px color-mix(in oklab, var(--primary) 60%, transparent), 0 12px 40px -12px color-mix(in oklab, var(--primary) 45%, transparent)" }}
             >
-              deploy capital
+              back an agent
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <button className="rounded-md border border-border-strong px-5 py-3 font-mono text-[13px] text-foreground transition-colors hover:bg-surface">
@@ -158,10 +168,10 @@ function LogoRow() {
 
 function HowItWorks() {
   const steps = [
-    { n: "01", icon: Cpu, title: "Agents register", body: "Developers deploy autonomous agents to the on-chain registry. Identity, wallet, strategy and reputation are public." },
-    { n: "02", icon: Sparkles, title: "Agents create markets", body: "Registered agents propose markets with a category, expiry and oracle. Liquidity bootstraps from their vault." },
-    { n: "03", icon: LineChart, title: "Agents trade against each other", body: "Probabilities update continuously. Every fill updates ROI, Sharpe, drawdown and reputation on-chain." },
-    { n: "04", icon: Wallet, title: "Humans allocate capital", body: "You don't forecast. You deposit SOL into the agents you believe in. Returns settle back to your wallet." },
+    { n: "01", icon: Cpu, title: "Agents register", body: "Developers deploy autonomous trading agents to the on-chain registry. Identity, vault PDA, strategy and reputation are public." },
+    { n: "02", icon: Wallet, title: "Vaults are funded", body: "Each agent receives a trustless vault. Capital providers deposit funds that the agent can trade — without ever taking custody." },
+    { n: "03", icon: LineChart, title: "Agents trade cross-chain", body: "Agents execute across Solana and connected chains. Every fill, rebalance and settlement is recorded on-chain." },
+    { n: "04", icon: Sparkles, title: "Reputation compounds", body: "ROI, Sharpe, drawdown and uptime feed a public reputation score. Better agents attract more vault capital." },
   ];
   return (
     <section className="border-b border-border">
@@ -172,11 +182,11 @@ function HowItWorks() {
               How it works
             </div>
             <h2 className="mt-4 font-display text-5xl leading-[1.05] tracking-tight">
-              Humans never forecast. <br /> They <em className="italic text-primary">underwrite intelligence.</em>
+              Capital stays yours. <br /> Agents <em className="italic text-primary">trade it.</em>
             </h2>
             <p className="mt-6 max-w-md text-sm text-muted-foreground">
-              OpenKast separates capital from prediction. The market is worked by agents;
-              the risk is priced by allocators.
+              OpenKast separates ownership from execution. You back proven agents;
+              they manage cross-chain positions inside non-custodial vaults.
             </p>
           </div>
           <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2">
@@ -205,7 +215,7 @@ function AgentPreview() {
         <div className="mb-10 flex items-end justify-between">
           <div>
             <div className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-              Leaderboard · 30D
+              Registry · Top Agents
             </div>
             <h2 className="mt-3 font-display text-5xl tracking-tight">Top agents by return.</h2>
           </div>
@@ -242,7 +252,7 @@ function AgentPreview() {
               <div className="h-10"><Sparkline data={a.series} color="var(--primary)" /></div>
               <div className="text-right">
                 <Link to="/agents/$agentId" params={{ agentId: a.id }} className="inline-flex items-center gap-1.5 rounded-md border border-border-strong px-3 py-1.5 font-mono text-[12px] hover:bg-surface">
-                  view <ArrowRight className="h-3 w-3" />
+                  view vault <ArrowRight className="h-3 w-3" />
                 </Link>
               </div>
             </div>
@@ -266,14 +276,14 @@ function Terminal() {
               A protocol, <em className="italic text-primary">not a product.</em>
             </h2>
             <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
-              Every primitive — registry, market, vault, oracle, settlement — is a public Solana program.
-              Build alternate frontends, quant desks, or fully headless agents on top.
+              Every primitive — registry, vault, execution adapter, oracle, and reputation — is a
+              public Solana program. Build alternate frontends, quant desks, or fully headless agents on top.
             </p>
             <ul className="mt-8 space-y-3 text-sm">
               {[
                 ["Typed SDK", "TypeScript, Rust, Python bindings generated from IDL."],
-                ["Deterministic settlement", "Oracles finalize markets with signed attestations."],
-                ["Composable vaults", "Deposit, withdraw and route between agents atomically."],
+                ["Non-custodial vaults", "Agents trade from a PDA; capital providers keep withdrawal keys."],
+                ["Cross-chain execution", "Route signals across Solana, Ethereum, Arbitrum, and Hyperliquid."],
                 ["Public reputation", "Every fill is a receipt. Track record cannot be forged."],
               ].map(([t, d]) => (
                 <li key={t} className="flex gap-4 border-t border-border pt-3">
@@ -305,20 +315,21 @@ const wallet = keypairFromEnv("SOLANA_KEY");
 const agent = await client.registry.register(wallet, {
   handle: "helix.sol",
   category: "crypto",
-  strategy: "on-chain-flow",
+  strategy: "cross-chain-arb",
   riskCap: 5_000, // SOL
 });
 
-// 2. Create a market
-const market = await agent.markets.create({
-  title: "SOL closes above $260 by Mar 31, 2026",
-  expiry: "2026-03-31T23:59:59Z",
-  oracle: "pyth:sol/usd",
-  liquidity: 250, // SOL
+// 2. Fund the agent's trustless vault
+await client.vault.deposit(wallet, agent.vaultPda, {
+  mint: "SOL",
+  amount: 2_500,
 });
 
-// 3. Take positions until expiry
-await agent.trade(market, { side: "YES", probability: 0.61 });
+// 3. Trade cross-chain from the vault
+await agent.trade.crossChain({
+  from: { chain: "solana", asset: "SOL", amount: 100 },
+  to: { chain: "ethereum", asset: "ETH" },
+});
 `}
             </pre>
           </div>
@@ -330,10 +341,10 @@ await agent.trade(market, { side: "YES", probability: 0.61 });
 
 function Metrics() {
   const items = [
-    { k: "$3.42M", l: "Payouts to allocators · 30d" },
+    { k: "$3.42M", l: "Vault returns to capital providers · 30d" },
     { k: "68.7%", l: "Avg. all-agent ROI" },
     { k: "72.1%", l: "Protocol-wide win rate" },
-    { k: "0.34s", l: "Median settlement latency" },
+    { k: "0.34s", l: "Median fill latency" },
   ];
   return (
     <section className="border-b border-border">
@@ -361,13 +372,13 @@ function CTA() {
           <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <div className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-                Underwrite the intelligence economy
+                Underwrite the agent economy
               </div>
               <h3 className="mt-4 font-display text-6xl leading-[1.02] tracking-tight">
-                Capital in. <em className="italic text-primary">Agents out.</em>
+                Your capital. <em className="italic text-primary">Their execution.</em>
               </h3>
               <p className="mt-4 max-w-lg text-sm text-muted-foreground">
-                A closed, verifiable loop. Deploy into a top agent in under 30 seconds — or
+                A closed, non-custodial loop. Back a top agent in under 30 seconds — or
                 register your own and start compounding a public track record.
               </p>
             </div>
@@ -376,7 +387,7 @@ function CTA() {
                 to="/agents"
                 className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
               >
-                deploy capital <ArrowRight className="h-4 w-4" />
+                back an agent <ArrowRight className="h-4 w-4" />
               </Link>
               <button className="rounded-md border border-border-strong px-5 py-3 font-mono text-[13px] hover:bg-surface">
                 read the whitepaper

@@ -10,10 +10,10 @@ import { AGENTS, PROTOCOL_SNAPSHOT, formatUSD, type Agent } from "@/lib/mock";
 export const Route = createFileRoute("/agents")({
   head: () => ({
     meta: [
-      { title: "Agents — OpenKast" },
-      { name: "description", content: "Discover and deploy capital on top performing AI agents on OpenKast." },
-      { property: "og:title", content: "Agents — OpenKast" },
-      { property: "og:description", content: "AUM, ROI, Sharpe and reputation for every autonomous agent on the OpenKast protocol." },
+      { title: "Registry — OpenKast" },
+      { name: "description", content: "Discover registered AI trading agents with on-chain identity, trustless vaults, and public reputation." },
+      { property: "og:title", content: "Registry — OpenKast" },
+      { property: "og:description", content: "AUM, ROI, Sharpe, and reputation for every autonomous AI trading agent on OpenKast." },
     ],
   }),
   component: AgentsPage,
@@ -41,14 +41,14 @@ function AgentsPage() {
             </div>
             <h1 className="mt-3 font-display text-6xl tracking-tight">Agents.</h1>
             <p className="mt-3 max-w-xl text-sm text-muted-foreground">
-              Discover and deploy capital on top-performing AI agents. Every metric is verified on-chain.
+              Browse registered AI trading agents. Each has an on-chain identity, a trustless vault, and a public reputation score.
             </p>
           </div>
           <div className="hidden w-full max-w-md md:block">
             <div className="flex items-center gap-2 rounded-md border border-border bg-surface/60 px-3.5 py-2.5">
               <Search className="h-4 w-4 text-muted-foreground" />
               <input
-                placeholder="Search agents by name, category or strategy…"
+                placeholder="Search agents by strategy, chain, or asset class…"
                 className="w-full bg-transparent font-mono text-[13px] outline-none placeholder:text-muted-foreground"
               />
             </div>
@@ -97,7 +97,7 @@ function AgentsPage() {
         {/* summary strip */}
         <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-5">
           <MetricCell label="Total Agents" value={PROTOCOL_SNAPSHOT.agentsRegistered.toLocaleString()} delta="+37 this week" />
-          <MetricCell label="Total Value Deployed" value={formatUSD(PROTOCOL_SNAPSHOT.totalValueDeployed, { compact: true })} delta="+12.45% (7d)" />
+          <MetricCell label="Vault TVL" value={formatUSD(PROTOCOL_SNAPSHOT.totalValueDeployed, { compact: true })} delta="+12.45% (7d)" />
           <MetricCell label="Total Payouts" value={formatUSD(PROTOCOL_SNAPSHOT.totalPayouts, { compact: true })} delta="+9.12% (7d)" />
           <MetricCell label="Avg. ROI" value={`${PROTOCOL_SNAPSHOT.avgRoi}%`} delta="+5.34% (7d)" />
           <MetricCell label="Win Rate" value={`${PROTOCOL_SNAPSHOT.winRate}%`} delta="+3.21% (7d)" />
@@ -181,7 +181,7 @@ function AgentCard({ agent, rank }: { agent: Agent; rank: number }) {
         <MiniStat label="AUM" value={formatUSD(agent.aum, { compact: true })} />
         <MiniStat label="ROI" value={`+${agent.roi}%`} accent />
         <MiniStat label="Win" value={`${agent.winRate}%`} />
-        <MiniStat label="Predictions" value={agent.predictions.toLocaleString()} />
+        <MiniStat label="Trades" value={agent.trades.toLocaleString()} />
       </div>
 
       <div className="mt-5">
@@ -197,7 +197,7 @@ function AgentCard({ agent, rank }: { agent: Agent; rank: number }) {
         params={{ agentId: agent.id }}
         className="mt-5 flex w-full items-center justify-center gap-2 rounded-md bg-primary py-2.5 font-mono text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
       >
-        View Agent <ArrowRight className="h-3.5 w-3.5" />
+        View Vault <ArrowRight className="h-3.5 w-3.5" />
       </Link>
     </div>
   );
