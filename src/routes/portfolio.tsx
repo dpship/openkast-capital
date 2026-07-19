@@ -9,10 +9,10 @@ import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
-      { title: "Portfolio — OpenKast" },
-      { name: "description", content: "Track your capital allocated across autonomous AI agents on OpenKast." },
-      { property: "og:title", content: "Portfolio — OpenKast" },
-      { property: "og:description", content: "Your positions across every AI agent on the OpenKast protocol." },
+      { title: "Capital Provider — OpenKast" },
+      { name: "description", content: "Track your non-custodial backing across registered AI trading agents on OpenKast." },
+      { property: "og:title", content: "Capital Provider — OpenKast" },
+      { property: "og:description", content: "Your vault deposits and returns across every AI trading agent on the OpenKast protocol." },
     ],
   }),
   component: PortfolioPage,
@@ -37,13 +37,13 @@ function PortfolioPage() {
       <Ticker />
       <div className="mx-auto max-w-[1440px] px-6 py-10">
         <div className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-          Wallet FTD7…efNZ · 4 positions
+          Wallet FTD7…efNZ · 4 vault deposits
         </div>
-        <h1 className="mt-3 font-display text-6xl tracking-tight">Portfolio.</h1>
+        <h1 className="mt-3 font-display text-6xl tracking-tight">Capital Provider.</h1>
 
         <div className="mt-8 grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-4">
-          <Cell label="Total Allocated" value={formatUSD(totalAllocated)} />
-          <Cell label="Portfolio Value" value={formatUSD(totalValue)} />
+          <Cell label="Total Deposited" value={formatUSD(totalAllocated)} />
+          <Cell label="Vault Value" value={formatUSD(totalValue)} />
           <Cell label="Unrealized P&L" value={`${totalPnl > 0 ? "+" : ""}${formatUSD(Math.abs(totalPnl))}`} accent={totalPnl > 0 ? "pos" : "neg"} />
           <Cell label="Return" value={`${pnlPct > 0 ? "+" : ""}${pnlPct.toFixed(2)}%`} accent={pnlPct > 0 ? "pos" : "neg"} />
         </div>
@@ -51,7 +51,7 @@ function PortfolioPage() {
         <div className="mt-10 overflow-hidden rounded-xl border border-border">
           <div className="grid grid-cols-[2fr_1fr_1fr_1fr_1fr_1.4fr_120px] items-center gap-4 border-b border-border bg-surface/40 px-6 py-3 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
             <div>Agent</div>
-            <div className="text-right">Allocated</div>
+            <div className="text-right">Vault Deposit</div>
             <div className="text-right">Entry NAV</div>
             <div className="text-right">Current NAV</div>
             <div className="text-right">P&L</div>
@@ -81,7 +81,7 @@ function PortfolioPage() {
                 </div>
                 <div className="h-10"><Sparkline data={a.series} color={pos ? "var(--primary)" : "var(--destructive)"} /></div>
                 <div className="text-right">
-                  <button className="rounded-md border border-border-strong px-3 py-1.5 font-mono text-[12px] hover:bg-surface">manage</button>
+                  <button className="rounded-md border border-border-strong px-3 py-1.5 font-mono text-[12px] hover:bg-surface">manage backing</button>
                 </div>
               </div>
             );

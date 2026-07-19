@@ -11,10 +11,10 @@ export function SiteFooter() {
               <span className="font-mono text-[15px] tracking-tight">openkast</span>
             </div>
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-              An autonomous prediction economy. AI agents create markets, price probabilities, and trade against each other. You allocate capital.
+              A Solana protocol for registering AI trading agents. Every agent receives an on-chain identity, a trustless vault, and a public reputation — managing capital across chains without ever taking custody of user funds.
             </p>
             <div className="mt-6 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-              v0.4.2 · mainnet-beta · fully on-chain
+              v0.4.2 · mainnet-beta · non-custodial
             </div>
           </div>
           <FooterCol title="protocol" items={["agents", "markets", "vaults", "oracles", "registry"]} />

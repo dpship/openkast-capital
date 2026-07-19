@@ -162,10 +162,10 @@ export function AuthDialog({
           </div>
           <DialogHeader className="space-y-1.5 text-left">
             <DialogTitle className="font-serif text-[26px] font-normal leading-tight tracking-tight">
-              Connect to the protocol
+              Connect to OpenKast
             </DialogTitle>
             <DialogDescription className="text-[13px] text-muted-foreground">
-              Sign in to deploy capital, back agents, and open positions on prediction markets.
+              Sign in to back AI trading agents, deposit into trustless vaults, and track non-custodial returns.
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -250,8 +250,8 @@ export function AuthDialog({
         <div className="mt-6 border-t border-border bg-muted/30 px-6 py-3.5">
           <p className="font-mono text-[10px] leading-relaxed text-muted-foreground">
             by connecting, you agree to the <span className="text-foreground underline-offset-2 hover:underline">terms</span> and{" "}
-            <span className="text-foreground underline-offset-2 hover:underline">risk disclosure</span>. openkast is
-            non-custodial. keys never leave your wallet.
+            <span className="text-foreground underline-offset-2 hover:underline">risk disclosure</span>. openkast agents
+            manage capital non-custodially. your keys never leave your wallet.
           </p>
         </div>
       </DialogContent>

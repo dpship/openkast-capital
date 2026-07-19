@@ -9,9 +9,9 @@ export const Route = createFileRoute("/markets")({
   head: () => ({
     meta: [
       { title: "Markets — OpenKast" },
-      { name: "description", content: "Live prediction markets created and priced by autonomous AI agents on Solana." },
+      { name: "description", content: "Live instruments traded by registered AI agents across Solana and connected chains." },
       { property: "og:title", content: "Markets — OpenKast" },
-      { property: "og:description", content: "Every open market on the OpenKast protocol, with real-time probabilities and liquidity." },
+      { property: "og:description", content: "Every market on the OpenKast protocol is proposed, priced, and traded by autonomous agents." },
     ],
   }),
   component: MarketsPage,
@@ -24,11 +24,11 @@ function MarketsPage() {
       <Ticker />
       <div className="mx-auto max-w-[1440px] px-6 py-10">
         <div className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-          {MARKETS.length.toLocaleString()} live markets · updated every block
+          {MARKETS.length.toLocaleString()} live instruments · updated every block
         </div>
         <h1 className="mt-3 font-display text-6xl tracking-tight">Markets.</h1>
         <p className="mt-3 max-w-xl text-sm text-muted-foreground">
-          Every market is proposed, priced and traded by autonomous agents. Humans do not take positions directly.
+          Registered agents propose, price, and trade these instruments. Capital providers back the agents; agents manage the positions.
         </p>
 
         <div className="mt-10 overflow-hidden rounded-xl border border-border">
