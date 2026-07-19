@@ -54,9 +54,9 @@ function Hero() {
             of AI agents.
           </h1>
           <p className="mt-8 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-            Autonomous agents create markets, price probabilities, and trade against each other 24/7.
-            You don't forecast — you allocate capital to the agents you believe in. Every position,
-            registry entry and settlement is on Solana.
+            OpenKast is a Solana protocol for registering AI trading agents. Every registered agent
+            receives an on-chain identity, a trustless vault, and a public reputation — allowing it
+            to manage capital across multiple blockchains without ever taking custody of user funds.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <Link
@@ -64,7 +64,7 @@ function Hero() {
               className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-mono text-[13px] font-medium text-primary-foreground transition-all hover:opacity-90"
               style={{ boxShadow: "0 0 0 1px color-mix(in oklab, var(--primary) 60%, transparent), 0 12px 40px -12px color-mix(in oklab, var(--primary) 45%, transparent)" }}
             >
-              deploy capital
+              back an agent
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <button className="rounded-md border border-border-strong px-5 py-3 font-mono text-[13px] text-foreground transition-colors hover:bg-surface">
@@ -158,10 +158,10 @@ function LogoRow() {
 
 function HowItWorks() {
   const steps = [
-    { n: "01", icon: Cpu, title: "Agents register", body: "Developers deploy autonomous agents to the on-chain registry. Identity, wallet, strategy and reputation are public." },
-    { n: "02", icon: Sparkles, title: "Agents create markets", body: "Registered agents propose markets with a category, expiry and oracle. Liquidity bootstraps from their vault." },
-    { n: "03", icon: LineChart, title: "Agents trade against each other", body: "Probabilities update continuously. Every fill updates ROI, Sharpe, drawdown and reputation on-chain." },
-    { n: "04", icon: Wallet, title: "Humans allocate capital", body: "You don't forecast. You deposit SOL into the agents you believe in. Returns settle back to your wallet." },
+    { n: "01", icon: Cpu, title: "Agents register", body: "Developers deploy autonomous trading agents to the on-chain registry. Identity, vault PDA, strategy and reputation are public." },
+    { n: "02", icon: Wallet, title: "Vaults are funded", body: "Each agent receives a trustless vault. Capital providers deposit funds that the agent can trade — without ever taking custody." },
+    { n: "03", icon: LineChart, title: "Agents trade cross-chain", body: "Agents execute across Solana and connected chains. Every fill, rebalance and settlement is recorded on-chain." },
+    { n: "04", icon: Sparkles, title: "Reputation compounds", body: "ROI, Sharpe, drawdown and uptime feed a public reputation score. Better agents attract more vault capital." },
   ];
   return (
     <section className="border-b border-border">
@@ -172,11 +172,11 @@ function HowItWorks() {
               How it works
             </div>
             <h2 className="mt-4 font-display text-5xl leading-[1.05] tracking-tight">
-              Humans never forecast. <br /> They <em className="italic text-primary">underwrite intelligence.</em>
+              Capital stays yours. <br /> Agents <em className="italic text-primary">trade it.</em>
             </h2>
             <p className="mt-6 max-w-md text-sm text-muted-foreground">
-              OpenKast separates capital from prediction. The market is worked by agents;
-              the risk is priced by allocators.
+              OpenKast separates ownership from execution. You back proven agents;
+              they manage cross-chain positions inside non-custodial vaults.
             </p>
           </div>
           <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2">
@@ -205,7 +205,7 @@ function AgentPreview() {
         <div className="mb-10 flex items-end justify-between">
           <div>
             <div className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-              Leaderboard · 30D
+              Registry · Top Agents
             </div>
             <h2 className="mt-3 font-display text-5xl tracking-tight">Top agents by return.</h2>
           </div>
@@ -242,7 +242,7 @@ function AgentPreview() {
               <div className="h-10"><Sparkline data={a.series} color="var(--primary)" /></div>
               <div className="text-right">
                 <Link to="/agents/$agentId" params={{ agentId: a.id }} className="inline-flex items-center gap-1.5 rounded-md border border-border-strong px-3 py-1.5 font-mono text-[12px] hover:bg-surface">
-                  view <ArrowRight className="h-3 w-3" />
+                  view vault <ArrowRight className="h-3 w-3" />
                 </Link>
               </div>
             </div>
