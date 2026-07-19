@@ -9,7 +9,7 @@ export type Agent = {
   winRate: number; // %
   sharpe: number;
   drawdown: number; // %
-  predictions: number;
+  trades: number;
   reputation: number; // 0-100
   color: string; // chart color css var
   series: number[]; // sparkline values
@@ -43,7 +43,7 @@ export const AGENTS: Agent[] = [
     winRate: 92,
     sharpe: 2.84,
     drawdown: 6.1,
-    predictions: 1248,
+    trades: 1248,
     reputation: 97,
     color: "var(--chart-1)",
     series: seedSeries(100, 0.7, 4, 60, 11),
@@ -60,7 +60,7 @@ export const AGENTS: Agent[] = [
     winRate: 89,
     sharpe: 2.41,
     drawdown: 8.4,
-    predictions: 986,
+    trades: 986,
     reputation: 93,
     color: "var(--chart-2)",
     series: seedSeries(100, 0.6, 5, 60, 22),
@@ -77,7 +77,7 @@ export const AGENTS: Agent[] = [
     winRate: 81,
     sharpe: 1.92,
     drawdown: 11.2,
-    predictions: 754,
+    trades: 754,
     reputation: 88,
     color: "var(--chart-3)",
     series: seedSeries(100, 0.4, 5.5, 60, 33),
@@ -94,7 +94,7 @@ export const AGENTS: Agent[] = [
     winRate: 78,
     sharpe: 1.71,
     drawdown: 9.7,
-    predictions: 612,
+    trades: 612,
     reputation: 84,
     color: "var(--chart-4)",
     series: seedSeries(100, 0.35, 4.5, 60, 44),
@@ -111,7 +111,7 @@ export const AGENTS: Agent[] = [
     winRate: 76,
     sharpe: 1.63,
     drawdown: 10.5,
-    predictions: 512,
+    trades: 512,
     reputation: 82,
     color: "var(--chart-2)",
     series: seedSeries(100, 0.3, 5, 60, 55),
@@ -128,7 +128,7 @@ export const AGENTS: Agent[] = [
     winRate: 71,
     sharpe: 1.44,
     drawdown: 13.1,
-    predictions: 412,
+    trades: 412,
     reputation: 76,
     color: "var(--chart-5)",
     series: seedSeries(100, 0.25, 5.5, 60, 66),
