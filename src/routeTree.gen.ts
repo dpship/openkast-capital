@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as MarketsRouteImport } from './routes/markets'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as DepositRouteImport } from './routes/deposit'
 import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AgentsAgentIdRouteImport } from './routes/agents.$agentId'
@@ -29,6 +30,11 @@ const MarketsRoute = MarketsRouteImport.update({
 const DocsRoute = DocsRouteImport.update({
   id: '/docs',
   path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DepositRoute = DepositRouteImport.update({
+  id: '/deposit',
+  path: '/deposit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgentsRoute = AgentsRouteImport.update({
@@ -50,6 +56,7 @@ const AgentsAgentIdRoute = AgentsAgentIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRouteWithChildren
+  '/deposit': typeof DepositRoute
   '/docs': typeof DocsRoute
   '/markets': typeof MarketsRoute
   '/portfolio': typeof PortfolioRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRouteWithChildren
+  '/deposit': typeof DepositRoute
   '/docs': typeof DocsRoute
   '/markets': typeof MarketsRoute
   '/portfolio': typeof PortfolioRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/agents': typeof AgentsRouteWithChildren
+  '/deposit': typeof DepositRoute
   '/docs': typeof DocsRoute
   '/markets': typeof MarketsRoute
   '/portfolio': typeof PortfolioRoute
@@ -77,16 +86,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/agents'
+    | '/deposit'
     | '/docs'
     | '/markets'
     | '/portfolio'
     | '/agents/$agentId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/agents' | '/docs' | '/markets' | '/portfolio' | '/agents/$agentId'
+  to:
+    | '/'
+    | '/agents'
+    | '/deposit'
+    | '/docs'
+    | '/markets'
+    | '/portfolio'
+    | '/agents/$agentId'
   id:
     | '__root__'
     | '/'
     | '/agents'
+    | '/deposit'
     | '/docs'
     | '/markets'
     | '/portfolio'
@@ -96,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgentsRoute: typeof AgentsRouteWithChildren
+  DepositRoute: typeof DepositRoute
   DocsRoute: typeof DocsRoute
   MarketsRoute: typeof MarketsRoute
   PortfolioRoute: typeof PortfolioRoute
@@ -122,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/docs'
       fullPath: '/docs'
       preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deposit': {
+      id: '/deposit'
+      path: '/deposit'
+      fullPath: '/deposit'
+      preLoaderRoute: typeof DepositRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agents': {
@@ -162,6 +188,7 @@ const AgentsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgentsRoute: AgentsRouteWithChildren,
+  DepositRoute: DepositRoute,
   DocsRoute: DocsRoute,
   MarketsRoute: MarketsRoute,
   PortfolioRoute: PortfolioRoute,
