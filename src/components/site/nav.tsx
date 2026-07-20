@@ -25,6 +25,7 @@ export function SiteNav() {
           <nav className="hidden items-center gap-7 md:flex">
             <NavLink to="/agents">agents</NavLink>
             <NavLink to="/markets">markets</NavLink>
+            <NavLink to="/deposit">deposit</NavLink>
             <NavLink to="/portfolio">portfolio</NavLink>
             <NavLink to="/docs">docs</NavLink>
           </nav>
