@@ -15,6 +15,7 @@ import {
 import { SiteNav } from "@/components/site/nav";
 import { SiteFooter } from "@/components/site/footer";
 import { Ticker } from "@/components/site/ticker";
+import { SeedPhraseDialog } from "@/components/site/seed-phrase-dialog";
 import { formatUSD } from "@/lib/mock";
 
 export const Route = createFileRoute("/deposit")({
@@ -115,6 +116,7 @@ const LEDGER: LedgerRow[] = [
 function DepositPage() {
   const [chain, setChain] = useState<ChainKey>("solana");
   const [copied, setCopied] = useState(false);
+  const [seedOpen, setSeedOpen] = useState(false);
   const cfg = CHAINS[chain];
   const bal = BALANCES[chain];
 
@@ -337,7 +339,10 @@ function DepositPage() {
                   </span>
                   <span className="text-muted-foreground">encrypted</span>
                 </button>
-                <button className="flex w-full items-center justify-between rounded-md border border-border bg-background px-3 py-2 font-mono text-[12px] hover:bg-surface">
+                <button
+                  onClick={() => setSeedOpen(true)}
+                  className="flex w-full items-center justify-between rounded-md border border-border bg-background px-3 py-2 font-mono text-[12px] hover:bg-surface"
+                >
                   <span className="flex items-center gap-2">
                     <KeyRound className="h-3.5 w-3.5" />
                     reveal recovery phrase
@@ -455,6 +460,7 @@ function DepositPage() {
       </div>
 
       <SiteFooter />
+      <SeedPhraseDialog open={seedOpen} onOpenChange={setSeedOpen} />
     </div>
   );
 }
