@@ -460,6 +460,7 @@ function DepositPage() {
       </div>
 
       <SiteFooter />
+      <SeedPhraseDialog open={seedOpen} onOpenChange={setSeedOpen} />
     </div>
   );
 }
