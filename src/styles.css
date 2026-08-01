@@ -179,3 +179,12 @@
 @utility animate-marquee {
   animation: marquee 60s linear infinite;
 }
+
+/* Gentle float for hero cursor bubbles */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@utility animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
