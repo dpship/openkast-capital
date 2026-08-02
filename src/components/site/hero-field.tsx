@@ -256,8 +256,11 @@ export function HeroField({ className = "" }: { className?: string }) {
     };
     window.addEventListener("pointermove", onPointerMove, { passive: true });
 
+    // Measure the host (the hero section), not the canvas: OGL's constructor
+    // writes inline 300x150 styles that would poison a canvas self-measure.
+    const host = canvas.parentElement ?? canvas;
     const resize = () => {
-      const rect = canvas.getBoundingClientRect();
+      const rect = host.getBoundingClientRect();
       const w = Math.max(1, Math.floor(rect.width));
       const h = Math.max(1, Math.floor(rect.height));
       renderer!.setSize(w, h);
@@ -266,7 +269,7 @@ export function HeroField({ className = "" }: { className?: string }) {
     };
     resize();
     const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
+    ro.observe(host);
 
     const io = new IntersectionObserver(
       (entries) => {
