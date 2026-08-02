@@ -24,6 +24,7 @@ import { SiteNav } from "@/components/site/nav";
 import { SiteFooter } from "@/components/site/footer";
 import { Ticker } from "@/components/site/ticker";
 import { Sparkline } from "@/components/site/sparkline";
+import { HeroField } from "@/components/site/hero-field";
 import { AGENTS, PROTOCOL_SNAPSHOT, formatUSD } from "@/lib/mock";
 
 export const Route = createFileRoute("/")({
@@ -64,8 +65,9 @@ function Landing() {
 function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-border">
-      <div className="pointer-events-none absolute inset-0 bg-grid opacity-40" />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[560px] w-[860px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/[0.05] blur-3xl" />
+      {/* cursor-reactive fog field (WebGL) — static grid remains as the no-GL fallback */}
+      <HeroField />
+      <div className="pointer-events-none absolute inset-0 bg-grid opacity-30" />
 
       {/* floating agent cursors */}
       <AgentCursor label="oracle07.sol filled YES @ 42¢" className="left-[8%] top-[22%]" delay="0s" />
