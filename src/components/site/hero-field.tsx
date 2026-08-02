@@ -218,8 +218,8 @@ export function HeroField({ className = "" }: { className?: string }) {
         uMouse: { value: [0.5, 0.5] },
         uPrevMouse: { value: [0.5, 0.5] },
         uStrength: { value: 0 },
-        uRadius: { value: 0.16 },
-        uFade: { value: 0.955 },
+        uRadius: { value: 0.19 },
+        uFade: { value: 0.965 },
         uTime: { value: 0 },
         uAspect: { value: 1 },
       },
@@ -308,7 +308,7 @@ export function HeroField({ className = "" }: { className?: string }) {
       prevTarget = { x: target.x, y: target.y };
       const speed = Math.sqrt(vx * vx + vy * vy);
       const strength = hasPointer
-        ? Math.min(1, speed * 34) * 0.6
+        ? Math.min(1, speed * 34) * 0.8
         : 0.35; // attractor mode: steady gentle trail
 
       // pass 1: evolve trail into the ping-pong buffer
