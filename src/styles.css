@@ -43,6 +43,14 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  /* Editorial ink/paper surfaces (home page scroll experience) */
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-ink-muted: var(--ink-muted);
+  --color-paper: var(--paper);
+  --color-paper-foreground: var(--paper-foreground);
+  --color-paper-muted: var(--paper-muted);
 }
 
 :root {
@@ -88,6 +96,14 @@
   --chart-3: oklch(0.60 0.13 180);
   --chart-4: oklch(0.65 0.15 85);
   --chart-5: oklch(0.48 0.012 240);
+
+  /* Fixed editorial palette for the home scroll experience — ink ↔ paper */
+  --ink: oklch(0.16 0.006 250);
+  --ink-foreground: oklch(0.97 0.003 240);
+  --ink-muted: oklch(0.62 0.012 240);
+  --paper: oklch(0.945 0.012 95);
+  --paper-foreground: oklch(0.17 0.008 250);
+  --paper-muted: oklch(0.44 0.012 250);
 }
 
 .dark {
